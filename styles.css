@@ -205,6 +205,63 @@ input[type=number]{
     right: 0;
 }
 
+@media only screen and (min-width: 1000px){
+
+    html,main, body{
+        height: 100%;
+    }
+    main{
+        justify-content: center;
+    }
+    #logo-wrapper{
+        padding: 30px;
+    }
+
+    #calculator-wrapper{
+        display: flex;
+        width: 920px;
+        height: 480px;
+        position: relative;
+        padding: 20px;
+        justify-content: space-evenly;
+        align-items: center;
+        border-radius: 24px;
+        
+    }
+
+    #calculator-output{
+        margin: 0;
+        width: 420px;
+        height: 420px;
+        box-sizing: border-box;
+        position: relative;
+    }
+
+    #calculator-inputs{
+        width: 414px;
+    }
+    
+    #tip-controls-wrapper{
+        display: grid;
+        column-gap: 12px;
+        row-gap: 12px;
+        grid-template-columns: 130px 130px 130px;
+        grid-template-rows: 50px 50px;
+    }
+
+    .tip-buttons{
+        width: 130px;
+    }
+
+    #reset{
+        position: relative;
+        bottom: -176px;
+        
+    }
+
+
+}
+
 
 
 

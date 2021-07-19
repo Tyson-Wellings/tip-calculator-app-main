@@ -1,19 +1,26 @@
 const wrappers = document.getElementsByClassName('calculator-section-wrapper')
 const inputs = document.getElementsByClassName('input');
 const tipButtons = document.getElementsByClassName('tip-buttons')
-var errorMessageLog = []
 var tipPercentage;
-console.log(inputs)
-for (let wrapperCount = 0; wrapperCount < wrappers.length; wrapperCount++) {
-    errorMessageLog[wrapperCount] = 0;
-}
+/* this neat sequences of declaring arrays and fillin them with 0s is alot faster and elegant
+when compared to using forLoops
+https://stackoverflow.com/questions/1295584/most-efficient-way-to-create-a-zero-filled-javascript-array
+*/
+var errorMessageLog = []
+errorMessageLog.length = wrappers.length; 
+errorMessageLog.fill(0);
+
+var tipButtonStates = []
+tipButtonStates.length = tipButtons.length;
+tipButtonStates.fill(0);
 
 const init = function () {
     document.getElementById('reset').addEventListener('click', reset);
-    console.log(Array.from(inputs))
-    Array.from(inputs).forEach(prepareInputs)
-    Array.from(tipButtons).forEach(prepareTipButtons)
-    //inputs[i].addEventListener('focusout', calculate) 
+    console.log(inputs)
+    Array.from(inputs).forEach(prepareInputs) //document.getElementsByClassName returns classes as a HTML Collection
+    Array.from(tipButtons).forEach(prepareTipButtons) //Array.from converts these into an array making them
+    //compatible with forEach
+    
 
 }
 
@@ -31,13 +38,13 @@ function prepareInputs(input, index) {
 }
 
 function validate(index, target) {
-    console.log(errorMessageLog)
+    
     wrapper = wrappers[index]
     if (target.value > 0) {
 
         target.style.border = 'none'
-        if (errorMessageLog[index] == 1) {
-            document.getElementById('error-message-' + index).style.display = 'none'
+        if (errorMessageLog[index] == 1) { 
+            document.getElementById('error-message-' + index).style.display = 'none' //hides any error messages that may be present
         }
         return
     }
@@ -73,13 +80,13 @@ function messageMaker(value, wrapper, index) {
         node = "negative value"
     }
 
-    if (errorMessageLog[index] == 1) {
-        console.log(node)
+    if (errorMessageLog[index] == 1) { 
+        /* if an error message has been created already this will just fill the div with the appropriate text */
         document.getElementById('error-message-' + index).textContent = node;
         document.getElementById('error-message-' + index).style.display = 'inline-block'
         return
     }
-    console.log(node)
+
     let errorMessage = document.createElement("div")
     errorMessage.id = "error-message-" + index
     errorMessage.className = "error-message";
@@ -90,6 +97,8 @@ function messageMaker(value, wrapper, index) {
 }
 
 function calculate() {
+
+   /*  majority of this function is just mathematical calculations */
     var tipTotal, tipPerPerson, zero
     document.getElementById('tip').value;
     zero = 0;
@@ -102,21 +111,32 @@ function calculate() {
         document.getElementById('tip-per-person').textContent = '$' + tipPerPerson.toFixed(2)
         return
     }
+
+    /* If all the user inputted values are not above 0 the calculator will display 0 */
     document.getElementById('tip-amount').textContent = '$' + zero.toFixed(2)
     document.getElementById('tip-per-person').textContent = '$' + zero.toFixed(2)
 }
 
 function prepareTipButtons(button) {
 
-    button.addEventListener('focusout', e => calculateTipPercentage(e))
+    document.getElementById('tip').addEventListener('focusout', e => calculateTipPercentage(e))
     button.addEventListener('click', e => calculateTipPercentage(e))
-    button.addEventListener('click', e => console.log('clicked'))
 
 }
 
 function calculateTipPercentage(button) {
+    console.log(button)
     tipPercentage = button.target.value
-    console.log('tip-percentage is ' + tipPercentage)
+    console.log(tipPercentage)
+    for (let tipButtonsCount = 0;tipButtonsCount < tipButtons.length; tipButtonsCount++ ){
+        tipButtons[tipButtonsCount].style.backgroundColor ="hsl(183, 100%, 15%)"
+        if (tipPercentage == tipButtons[tipButtonsCount].value && !(button.target == document.getElementById('tip'))){
+            tipButtons[tipButtonsCount].style.backgroundColor ="hsl(172, 67%, 45%)"
+        }
+    }
+    calculate()
+
+   
 }
 
 document.addEventListener('DOMContentLoaded', init);
