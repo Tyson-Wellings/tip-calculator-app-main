@@ -110,6 +110,7 @@ function calculate() {
     if (tipTotal > 0 && tipPerPerson > 0 && people > 0) {
         document.getElementById('tip-amount').textContent = '$' + tipTotal.toFixed(2)
         document.getElementById('tip-per-person').textContent = '$' + tipPerPerson.toFixed(2)
+        document.getElementById('reset').style.opacity = '1'
         return
     }
 
