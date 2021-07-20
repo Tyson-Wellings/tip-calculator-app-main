@@ -19,7 +19,8 @@ const init = function () {
     console.log(inputs)
     Array.from(inputs).forEach(prepareInputs) //document.getElementsByClassName returns classes as a HTML Collection
     Array.from(tipButtons).forEach(prepareTipButtons) //Array.from converts these into an array making them
-    //compatible with forEach
+   /*  compatible with forEach
+    https://dmitripavlutin.com/foreach-iterate-array-javascript/ */
     
 
 }
@@ -28,7 +29,7 @@ const reset = function () {
     document.getElementById('calculator-inputs').reset();
 }
 
-function prepareInputs(input, index) {
+function prepareInputs(input, index) { 
     console.log(index)
     input.addEventListener('focusout', e => validate(index, e.target))
     input.addEventListener('focusout', calculate)
