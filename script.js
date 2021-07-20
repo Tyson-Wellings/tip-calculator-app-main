@@ -27,6 +27,11 @@ const init = function () {
 
 const reset = function () {
     document.getElementById('calculator-inputs').reset();
+    Array.from(tipButtons).forEach(resetButtons)
+}
+
+function resetButtons (input){
+    input.style.backgroundColor ="hsl(183, 100%, 15%)"
 }
 
 function prepareInputs(input, index) { 
